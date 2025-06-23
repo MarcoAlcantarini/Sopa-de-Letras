@@ -6,3 +6,4 @@ Este proyecto es una aplicación en Java que permite cargar una sopa de letras d
 - Giovanni Zarbo
 - Sebastian Guillén
 
+A la hora de generar el Javadoc surgieron un par de errores en los archivos: ControladorBusqueda y ResultadoBFS, aqui los puede encontrar ya arreglados.
