@@ -234,4 +234,63 @@ public class ControladorBusqueda {
      *
      * @param inicio Nodo inicial.
      * @param palabra Palabra a buscar.
-     * @
+     * @return ResultadoBFS con información del recorrido.
+     */
+    private ResultadoBFS bfsVisual(NodoGrafo inicio, String palabra) {
+        Queue<NodoEstadoVisual> cola = new LinkedList<>();
+        Map<NodoGrafo, NodoGrafo> padres = new HashMap<>();
+        List<NodoGrafo> caminoEncontrado = new ArrayList<>();
+        
+        cola.add(new NodoEstadoVisual(inicio, 0, new HashSet<>()));
+        padres.put(inicio, null);
+
+        while (!cola.isEmpty()) {
+            NodoEstadoVisual estado = cola.poll();
+            NodoGrafo actual = estado.nodo;
+            int indice = estado.indice;
+            Set<NodoGrafo> visitados = estado.visitados;
+
+            if (actual.getLetra() != palabra.charAt(indice)) continue;
+
+            visitados.add(actual);
+            caminoEncontrado.add(actual);
+
+            if (indice == palabra.length() - 1) {
+                return new ResultadoBFS(true, caminoEncontrado, padres);
+            }
+
+            for (NodoGrafo vecino : actual.getAdyacentes()) {
+                if (!visitados.contains(vecino)) {
+                    Set<NodoGrafo> copia = new HashSet<>(visitados);
+                    cola.add(new NodoEstadoVisual(vecino, indice + 1, copia));
+                    padres.put(vecino, actual);
+                }
+            }
+        }
+        return new ResultadoBFS(false, null, null);
+    }
+
+    /**
+     * Clase interna para representar el estado en la búsqueda BFS con visualización.
+     */
+    private static class NodoEstadoVisual {
+        /** Nodo actual en la búsqueda. */
+        NodoGrafo nodo;
+        /** Índice actual en la palabra buscada. */
+        int indice;
+        /** Conjunto de nodos visitados. */
+        Set<NodoGrafo> visitados;
+
+        /**
+         * Constructor de NodoEstadoVisual.
+         * @param nodo Nodo actual.
+         * @param indice Índice de la palabra.
+         * @param visitados Conjunto de nodos visitados.
+         */
+        NodoEstadoVisual(NodoGrafo nodo, int indice, Set<NodoGrafo> visitados) {
+            this.nodo = nodo;
+            this.indice = indice;
+            this.visitados = visitados;
+        }
+    }
+}
