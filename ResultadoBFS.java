@@ -30,11 +30,24 @@ public class ResultadoBFS {
      * @param padres Mapa de nodos a sus padres para reconstruir el árbol BFS.
      * @param inicio Nodo inicial de la búsqueda.
      */
-    public ResultadoBFS(boolean encontrado, List<NodoGrafo> recorrido, Map<NodoGrafo, NodoGrafo> padres, NodoGrafo inicio) {
+    public ResultadoBFS(boolean encontrado, List<NodoGrafo> recorrido, 
+                       Map<NodoGrafo, NodoGrafo> padres, NodoGrafo inicio) {
         this.encontrado = encontrado;
         this.recorrido = recorrido;
         this.padres = padres;
         this.inicio = inicio;
+    }
+
+    /**
+     * Versión simplificada del constructor sin el nodo inicial.
+     *
+     * @param encontrado true si la palabra fue encontrada.
+     * @param recorrido Lista de nodos del recorrido.
+     * @param padres Mapa de relaciones padre-hijo.
+     */
+    public ResultadoBFS(boolean encontrado, List<NodoGrafo> recorrido, 
+                       Map<NodoGrafo, NodoGrafo> padres) {
+        this(encontrado, recorrido, padres, null);
     }
 
     /**
@@ -56,4 +69,20 @@ public class ResultadoBFS {
     }
 
     /**
-     * Obtiene el mapa de nodos y s*
+     * Obtiene el mapa de nodos y sus padres en el recorrido BFS.
+     *
+     * @return Mapa de relaciones padre-hijo.
+     */
+    public Map<NodoGrafo, NodoGrafo> getPadres() {
+        return padres;
+    }
+
+    /**
+     * Obtiene el nodo inicial de la búsqueda BFS.
+     *
+     * @return Nodo inicial.
+     */
+    public NodoGrafo getInicio() {
+        return inicio;
+    }
+}
